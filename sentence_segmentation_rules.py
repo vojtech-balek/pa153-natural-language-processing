@@ -25,7 +25,7 @@ def rules(text: str):
     abbreviations.extend(['Ms', 'obr'])
     abbreviations_pattern = "|".join(re.escape(abbrev) for abbrev in abbreviations)
 
-    regex_pattern = r'(?<!\b(\d{1,2}\s?|(?i:' + abbreviations_pattern +  r'))|\b\w)\.\s(?![a-z])'
+    regex_pattern = r'(?<!\b(\d{1,2}\s?|(?i:' + abbreviations_pattern + r'))|\b\w)(?<![A-Z])\.\s(?![a-z])'
 
     text = re.sub(regex_pattern, '.\n', text)
     return text
