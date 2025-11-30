@@ -20,7 +20,7 @@ def segment_with_openai(text: str, deployment_name: str) -> str:
     response = client.chat.completions.create(
         model=deployment_name,
         messages=[
-            {"role": "system", "content": "You are a helpful assistant that segments text into sentences. For each sentence, you will add a newline character at the end. Do not add any extra text or explanations."},
+            {"role": "system", "content": "You are a helpful assistant that segments text into sentences. For each sentence, you will add a newline character at the end. The data is presented in naive chunks, it is possible that some sentences (mainly at the start and the end of file) are incomplete. Take that into account. Do not add any extra text or explanations."},
             {"role": "user", "content": f"Segment the following text into sentences:\n\n{text}"}
         ],
         temperature=0.1
@@ -40,7 +40,7 @@ if __name__ == "__main__":
         file_content = load('data/pa153_2025_test_all.txt')
 
         # Split content into chunks of 1000 characters to avoid rate limits
-        chunk_size = 1500
+        chunk_size = 2000
         chunks = [file_content[i:i+chunk_size] for i in range(0, len(file_content), chunk_size)]
 
         segmented_text = ""
